@@ -1,4 +1,6 @@
 const imgFolder = "images/images/";
+const tblBody = document.getElementById("tbody");
+
 
 function renderProduct(productElem, category){
     productElem.map((product) => {
@@ -8,20 +10,24 @@ function renderProduct(productElem, category){
     }).forEach((product) => product.render());
 }
 
+
 class Product{
     constructor(category, type, price){
         this.category = category;
         this.type = type;
-        this.price = price;
+        this.price = price + " USD";
     }
     render(){
         const tr = document.createElement('tr');
+		
         Object.keys(this).forEach((key) => {
             let td = document.createElement('td');
-            td.innerText = this[key];
+            td.innerText = this[key].replace( ',', '-');
+
             if(this[key] === this.category){
-                const img = new Image(70, 70);
+                const img = new Image(50, 50);
                 img.src = this.category;
+				img.alt = this.type;
                 td.innerText = null;
                 td.append(img);
             }
@@ -30,7 +36,7 @@ class Product{
             tr.append(td);
         })
 
-        document.body.append(tr);
+        tblBody.append(tr);
     }
 }
 
@@ -94,7 +100,6 @@ let cosmeticsProducts = [
 		price: 300,
 	}
 ];
-
 
 renderProduct(kitchenProducts, "kitchen");
 renderProduct(devicesProducts, "devices");
